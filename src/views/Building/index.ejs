@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Web Quản Lý Cho Thuê Nhà Đất</title>
+
+</head>
+
+<body>
+    <!-- Navigation-->
+    <%-include ("../public/ejspub/header.ejs")%>
+        <!-- Page Header-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-default  btn-block" data-toggle="tooltip" title="Insert"
+                        onclick="window.location.href='/district'">
+                        District</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-default  btn-block" data-toggle="tooltip" title="Insert"
+                        onclick="window.location.href='/renttype'">
+                        Rentype</button>
+                </div>
+            </div>
+            <br>
+            <form>
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <i class='fas fa-search'></i>
+                        </div>
+                    </div>
+                    <form id="formsearch">
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <input value="<%=namesearch%>" type="text" class="form-control" name="name"
+                                    placeholder="Search By Building Name">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </form>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-default  btn-block" data-toggle="tooltip" title="Insert"
+                        onclick="window.location.href='/building/insert'">
+                        <i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Rent Area</th>
+                        <th>Address</th>
+                        <th>Rent Type</th>
+                        <th>Manager Name</th>
+                        <th>Manager Phone</th>
+                        <th>Rent Price</th>
+                        <th>Sell Price</th>
+                        <th>Note</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%listBuilding.forEach(item=>{%>
+                        <tr>
+                            <td>
+                                <%=item.name%>
+                            </td>
+                            <td>
+                                <%=item.rentarea%>
+                            </td>
+                            <td>
+                                <%=item.address%>
+                            </td>
+                            <td>
+                                <%=item.renttypes%>
+                            </td>
+                            <td>
+                                <%=item.managername%>
+                            </td>
+                            <td>
+                                <%=item.managerphone%>
+                            </td>
+                            <td>
+                                <%=item.rentprice%>
+                            </td>
+                            <td>
+                                <%=item.sellprice%>
+                            </td>
+                            <td>
+                                <%=item.note%>
+                            </td>
+                            <td>
+                                <image src="<%=item.imagelink%>" width="300" height="200"></image>
+                            </td>
+                            <td style="width: 100px;text-align: left;">
+                                <button id="update" data-toggle="tooltip" title="Update" class="btn btn-default"
+                                    onclick="up(value)" value=<%=item._id%>><i class="fas fa-user-edit"></i></button>
+                                <button id="xoa" type="button" data-toggle="modal" class="btn btn-default"
+                                    data-target="#myModal" data-toggle="tooltip" title="Delete" value="<%=item._id%>"
+                                    onclick="chuyen(value)">
+                                    <i class="fas fa-minus-circle">
+                                    </i>
+                                </button>
+
+                                <button id="contact" type="button" data-toggle="modal" class="btn btn-default"
+                                    data-target="#myModal2" data-toggle="tooltip" title="Contact" value="<%=item._id%>"
+                                    onclick="loadCuss(value)">
+                                    <i class="fas fa-address-book"></i>
+                                    <%= item.customerids.length %>
+                                </button>
+                                <button id="comment" type="button" data-toggle="modal" class="btn btn-default"
+                                    data-target="#myModal3" data-toggle="tooltip" title="Contact" value="<%=item._id%>"
+                                    onclick="loadCom(value)">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <%= item.commentids.length %>
+                                </button>
+                                <%if(item.avalible=="avalible"||item.avalible==undefined){%>
+                                    <button id="aval" value="<%= item._id %> " onclick="putAval1(value)"
+                                        class="btn btn-outline-success btn-sm btn-block" data-toggle="tooltip"
+                                        title="avalible"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                                    <%}else{%>
+                                        <button id="aval" value="<%= item._id %> " onclick="putAval2(value)"
+                                            class="btn btn-outline-danger btn-sm btn-block" data-toggle="tooltip"
+                                            title="unavalible"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                        <%}%>
+                            </td>
+                        </tr>
+                        <% })%>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirm</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        Are you want detele it ??
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="xoamodal" type="button" class="btn btn-danger">OK</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal contact -->
+        <div class="modal fade" id="myModal2">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">List Contact</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="showcus">
+
+                                    </tbody>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <!-- <button id="xoamodal" type="button" class="btn btn-danger">OK</button> -->
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- The Modal Comment -->
+        <div class="modal fade" id="myModal3">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Comments</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Rate</th>
+                                            <th>Comment</th>
+                                            <th>Reply</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="showcom">
+
+                                    </tbody>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <!-- <button id="xoamodal" type="button" class="btn btn-danger">OK</button> -->
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <%-include ("../public/ejspub/footer.ejs")%>
+            <script>
+                function up(value) {
+                    window.location.href = "/building/" + value + "/update";
+                }
+                $('#xoamodal').click(function () {
+                    $.ajax({
+                        type: "delete",
+                        url: "/building/" + $('#xoamodal').val() + "/delete",
+                        dataType: "json",
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("loi");
+                        }
+                    });
+                })
+                function chuyen(value) {
+                    $("#xoamodal").val(value);
+                }
+                $("#formsearch").submit(function (e) {
+                    e.preventDefault();
+                    var data = $("#formsearch").serialize();
+                    $.ajax({
+                        type: "get",
+                        url: "/building",
+                        data: data,
+                        dataType: "json",
+                        success: function (response) {
+
+                        }
+                    });
+                })
+                function loadCuss(value) {
+                    $.ajax({
+                        type: "get",
+                        url: "/building/" + value + "/customer",
+                        dataType: "json",
+                        success: function (response) {
+                            $("#showcus").empty()
+                            response.forEach(data => {
+                                var statusPs = "";
+                                if (data.status == "pending") {
+                                    statusPs = '<button type="button" class="btn btn-warning btn-sm" value="' + data._id + '" onclick="putCuss1(value)">Pending</button>';
+                                } else {
+                                    statusPs = '<button type="button" class="btn btn-success btn-sm " value="' + data._id + '" onclick="putCuss2(value)">Solved</button>';
+                                }
+
+                                var str = "<tr>"
+                                    + "<td>" + data.name + "</td>"
+                                    + "<td>" + data.phone + "</td>"
+                                    + "<td>" + data.email + "</td>"
+                                    + "<td>" + data.type + "</td>"
+                                    + "<td>" + statusPs + "</td>"
+                                    + "</tr>";
+                                $("#showcus").append(str);
+                            });
+                        },
+                        error: function () {
+                            alert('loi');
+                        }
+                    });
+                }
+                function putCuss1(value) {
+                    $.ajax({
+                        type: "put",
+                        url: "building/customer/" + value + "/update",
+                        dataType: "json",
+                        data: {
+                            "status": "solved"
+                        },
+                        success: function (response) {
+                            location.reload()
+                        },
+                        error: function (err) {
+                            alert('loi put');
+                        }
+                    });
+                }
+                function putCuss2(value) {
+                    $.ajax({
+                        type: "put",
+                        url: "building/customer/" + value + "/update",
+                        dataType: "json",
+                        data: {
+                            "status": "pending"
+                        },
+                        success: function (response) {
+                            location.reload()
+                        },
+                        error: function (err) {
+                            alert('loi put');
+                        }
+                    });
+                }
+
+
+                function loadCom(value) {
+                    $.ajax({
+                        type: "get",
+                        url: "/building/" + value + "/comment",
+                        dataType: "json",
+                        success: function (response) {
+                            $("#showcom").empty()
+                            response.listCmt.forEach(data => {
+                                var dtrep = "";
+                                if (data.reply == undefined || data.reply == "") {
+                                    dtrep = "";
+                                } else {
+                                    dtrep = data.reply;
+                                }
+                                var rep = '<td><input id="' + data._id + '" type="text" name="reply" value="' + dtrep + '"><button class="btn btn-danger" type="button" value="' + data._id + '" onclick="rep(value)">Rep</button></td>'
+                                var str = "<tr>"
+                                    + "<td>" + data.name + "</td>"
+                                    + "<td>" + data.rate + '/5' + "</td>"
+                                    + "<td>" + data.content + "</td>"
+                                    + rep
+                                    + "</tr>";
+                                $("#showcom").append(str);
+                            });
+                        },
+                        error: function () {
+                            alert('loi');
+                        }
+                    });
+                }
+                function rep(value) {
+                    var id = "#" + value;
+                    $.ajax({
+                        type: "put",
+                        url: "/building/comment/" + value,
+                        data: {
+                            "reply": $(id).val()
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            location.reload()
+                        },
+                        error: function () {
+                            alert('loi rep');
+                        }
+                    });
+                }
+                function putAval1(value) {
+                    $.ajax({
+                        type: "put",
+                        url: "/building/"+value+"/update",
+                        data: {
+                            "avalible":"unavalible"
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            location.reload()
+                        },
+                        error:function(){
+                            alert('loi put ava');
+                        }
+                    });
+                }
+                function putAval2(value) {
+                    $.ajax({
+                        type: "put",
+                        url: "/building/"+value+"/update",
+                        data: {
+                            "avalible":"avalible"
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            location.reload()
+                        },
+                        error:function(){
+                            alert('loi put ava');
+                        }
+                    });
+                }
+
+            </script>
+</body>
+
+</html>

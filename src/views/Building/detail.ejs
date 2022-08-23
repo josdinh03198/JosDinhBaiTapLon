@@ -1,0 +1,441 @@
+<%-include ("../public/ejspub/header.ejs")%>
+    <div class="container">
+        <div class="row">
+            <% listBuilding.forEach(item=>{%>
+                <div class="col-md-5">
+                    <table class="table" style="border-color: white;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <image type="button" src="<%=item.imagelink%>" width="400" height="300"
+                                        style="border-radius: 10%;"></image>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5 style="text-align: center;color: chocolate;"><b>Customer Contact</b></h6>
+                                        <ul class="list-group">
+                                            <% listCustomer.forEach(item2=>{%>
+                                                <li class="list-group-item list-group-item-info"><b>Name: </b>
+                                                    <%= item2.name %>
+                                                </li>
+                                                <li class="list-group-item list-group-item-info"><b>Type: </b>
+                                                    <%= item2.type %>
+                                                </li>
+                                                <% if(item2.status=="pending" ){%>
+                                                    <li class="list-group-item list-group-item-warning"><b>Status: </b>
+                                                        <%= item2.status %>
+                                                    </li>
+                                                    <%}else{%>
+                                                        <li class="list-group-item list-group-item-success"><b>Status:
+                                                            </b>
+                                                            <%= item2.status %>
+                                                        </li>
+                                                        <%} %>
+
+                                                            <li></li>
+                                                            <%}) %>
+                                        </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-md-7">
+                    <table class="table" style="border-color: white;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b style="font-size: 30px;color: brown;">
+                                        <%=item.name%>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <table class="table" style="border-color: white;text-align: center;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <b style="font-size: 40px">
+                                                                <%=parseFloat(item.rank).toFixed(1)%>
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <%for(var i=1 ; i<=item.rank;i++){%>
+                                                                <i class="fas fa-star"></i>
+                                                                <%}%>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="sum">
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <table class="table" style="border-color: white;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <b>5 </b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div id="5" class="progress-bar"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <b>4 </b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div id="4" class="progress-bar"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <b>3 </b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div id="3" class="progress-bar"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <b>2 </b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div id="2" class="progress-bar"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <b>1 </b>
+                                                        </td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div id="1" class="progress-bar"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Address: </b>
+                                        <%=item.address%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Rent Area: </b>
+                                        <%=item.rentarea%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Rent Type: </b>
+                                        <%=item.renttypes%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Phone Contact: </b>
+                                        <%=item.managerphone%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Name Contact:</b>
+                                        <%=item.managername%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Sell price: </b>
+                                        <%=item.sellprice%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Rent price: </b>
+                                        <%=item.rentprice%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6><b>Description: </b>
+                                        <%=item.note%>
+                                    </h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="tuan1" type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#myModal" value="<%=item._id%>">Leave contact information</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <%}) %>
+        </div>
+        <hr />
+        <div class="row">
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group" id="list2">
+                    <li class="list-group-item list-group-item-success"><b>Name: </b>Tuấn</li>
+                    <li class="list-group-item list-group-item-success"><b>Rate: </b><i class="fas fa-star"></i></li>
+                    <li class="list-group-item list-group-item-success"><b>Comment: </b>Nhà đẹp phết</li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <form id="formcmt">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label><b>Name</b></label>
+                            <input type="" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label><b>Content</b></label>
+                            <input type="" class="form-control" name="content">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label><b>Rate</b></label>
+                            <br>
+                            <input type="radio" name="rate" value=1>&nbsp&nbsp
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i><br>
+
+                            <input type="radio" name="rate" value=2>&nbsp&nbsp
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i><br>
+
+                            <input type="radio" name="rate" value=3>&nbsp&nbsp
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i><br>
+
+                            <input type="radio" name="rate" value=4>&nbsp&nbsp
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i><br>
+
+                            <input type="radio" name="rate" checked value=5>&nbsp&nbsp
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i><br>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-success btn-block">Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Information Form</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="formnhap">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" name="phone">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" name="email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="radio">
+                                        <label><input type="radio" value="BUY" name="type">&nbsp&nbspBuy</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" value="RENT" name="type">&nbsp&nbspRent</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" value="NOTHING" name="type">&nbsp&nbspNothing</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="submitbtn" type="button" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <%-include ("../public/ejspub/footer.ejs")%>
+        <script>
+            $(document).ready(function () {
+                $("#submitbtn").click(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "post",
+                        url: "/building/" + $("#tuan1").val() + "/customer",
+                        data: $("#formnhap").serialize(),
+                        dataType: "json",
+                        success: function (response) {
+                            alert("Đã thêm thông tin liên hệ!!!!");
+                            location.reload()
+                        },
+                        error: function (res) {
+                            alert('error ');
+                        }
+                    });
+                })
+
+            })
+            $(document).ready(function () {
+                $("#formcmt").submit(function (e) {
+                    e.preventDefault();
+                    var data = $("#formcmt").serialize();
+                    $.ajax({
+                        type: "post",
+                        url: "/building/" + $("#tuan1").val() + "/comment",
+                        data: data,
+                        dataType: "json",
+                        success: function (response) {
+                            location.reload()
+                        },
+                        error: function () {
+                            alert('loicmt');
+                        }
+                    });
+                })
+
+            })
+            $.ajax({
+                type: "get",
+                url: "/building/" + $("#tuan1").val() + "/comment",
+                dataType: "json",
+                success: function (response) {
+                    $("#list2").empty();
+                    $("#sum").append('Total rate: ' + response.sum)
+                    $("#1").css("width", response.s1 + "%")
+                    $("#2").css("width", response.s2 + "%")
+                    $("#3").css("width", response.s3 + "%")
+                    $("#4").css("width", response.s4 + "%")
+                    $("#5").css("width", response.s5 + "%")
+                    response.listCmt.forEach(item => {
+                        var star = "";
+                        for (var i = 1; i <= item.rate; i++) {
+                            star += '<i class="fas fa-star"></i>'
+                        }
+                        var rep = "";
+                        if (item.reply != undefined && item.reply != "") {
+                            rep = '<li class="list-group-item list-group-item-warning"><b>Admin: </b>' + item.reply + '</li>';
+                        }
+                        var str = '<li class="list-group-item list-group-item-success"><b>Guest: </b>' + item.name + '</li>'
+                            + '<li class="list-group-item list-group-item-success">' + star + '</li>'
+                            + '<li class="list-group-item list-group-item-success">' + item.content + '</li>'
+                            + rep
+                            + '<li></li>';
+                        $("#list2").append(str)
+                    });
+                },
+                error: function () {
+                    console.log("loicmtget");
+                }
+            });
+
+        </script>
+        <style>
+            .list-group {
+                height: 420px;
+                width: 100%;
+            }
+
+            .list-group {
+                overflow: hidden;
+                overflow-y: scroll;
+            }
+
+            #list2 {
+                height: 400px;
+                width: 100%;
+            }
+
+            #list2 {
+                overflow: hidden;
+                overflow-y: scroll;
+            }
+
+            .progress {
+                border-radius: 40px;
+            }
+        </style>
